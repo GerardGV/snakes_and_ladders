@@ -4,11 +4,12 @@ public final class Board {
 	private ArrayList<Square> squares = new ArrayList<>();
 	private static final int MIN_NUM_SQUARES = 10;
 
-	public Board(int numSquares, int[][] ladders, int[][] snakes) {
+	public Board(int numSquares, int[][] ladders, int[][] snakes, int[] deaths) {
 		assert numSquares > MIN_NUM_SQUARES : "There must be at least " + MIN_NUM_SQUARES + " squares";
 		makeSquares(numSquares);
 		makeSnakesOrLadders(ladders);
 		makeSnakesOrLadders(snakes);
+		makeDeaths(deaths);
 	}
 
 	public Square firstSquare() {
@@ -60,42 +61,15 @@ public final class Board {
 		}
 	}
 
-	/*
-    private void makeSnakes(int[][] snakes) {
-		for (int i=0; i<snakes.length ; i++) {
-			assert snakes[i].length == 2;
-			
-			int fromPosition = snakes[i][0]-1;
-			int toPosition = snakes[i][1]-1;
-			int transport = toPosition - fromPosition;
-			
-			assert transport<0 : "In snake, destination equal or after origin";
-			assert (toPosition > 0) && (toPosition<numberOfSquares()-1);
-			assert (fromPosition < numberOfSquares()-1) && (fromPosition>0);
+	private void makeDeaths(int[] deaths){
+		for (int i=0; i<deaths.length ; i++) {
 
-			System.out.println("snake from " + (fromPosition+1) + " to " + (toPosition+1));
-			squares.set(fromPosition, new Snake(fromPosition,this, transport));
+			assert (deaths[i] > 0) && (deaths[i] < numberOfSquares()-1);
+			int boardPosition = deaths[i]-1;
+			System.out.println("death square at " + boardPosition);
+
+			squares.set(boardPosition, new Death(boardPosition,this));
 		}
-    }
+	}
 
-	*/
-	/*
-    private void makeLadders(int[][] ladders) {
-		for (int i=0; i<ladders.length; i++) {
-			assert ladders[i].length == 2;
-			
-			int fromPosition = ladders[i][0]-1;
-			int toPosition = ladders[i][1]-1;
-			int transport = toPosition - fromPosition;
-			
-			assert transport>0 : "In ladder, origin equal or after destination";
-			assert (toPosition < numberOfSquares()) && (toPosition > 0);
-			assert (fromPosition > 0) && (fromPosition < numberOfSquares());
-
-			System.out.println("ladder from " + (fromPosition+1) + " to " + (toPosition+1));
-			squares.set(fromPosition, new Ladder(fromPosition,this, transport));
-		}
-    }
-
-	 */
 }

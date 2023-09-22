@@ -6,10 +6,11 @@ public final class Game {
 	private Player winner;
 
 	public Game(String[] playerNames, int numSquares,
-				int[][] snakes, int[][] ladders) {
+				int[][] snakes, int[][] ladders, int[] deaths) {
 
-		makeBoard(numSquares, ladders, snakes);
+		makeBoard(numSquares, ladders, snakes, deaths);
 		makePlayers(playerNames);
+
 	}
 
 	public void play() {
@@ -21,18 +22,25 @@ public final class Game {
 
 		System.out.println("Initial state : \n" + this);
 		int numRounds = 0;
-		while (notOver()) {
+		while (notOver() && playersLive()) {
 			int roll = die.roll();
 			System.out.println("Current player is " + currentPlayer() + " and rolls " + roll);
 			movePlayer(roll);
 			System.out.println("State : \n" + this);
 			numRounds++;
 		}
-		System.out.println(winner + " has won after " + numRounds + " rounds");
+		if(winner != null) {
+			System.out.println(winner + " has won after " + numRounds + " rounds");
+		}
+		else
+		{
+			System.out.println("All players are dead :(");
+		}
+
 	}
 
-	private void makeBoard(int numSquares, int[][] ladders, int[][] snakes) {
-		board = new Board(numSquares,ladders,snakes);
+	private void makeBoard(int numSquares, int[][] ladders, int[][] snakes, int[] deaths) {
+		board = new Board(numSquares,ladders,snakes, deaths);
 	}
 
 	private void makePlayers(String[] playerNames) {
@@ -47,6 +55,7 @@ public final class Game {
 		}
 	}
 
+
 	private void initializeGame() {
 		placePlayersAtFirstSquare();
 		winner = null;
@@ -60,6 +69,18 @@ public final class Game {
 
 	private boolean notOver() {
 		return (winner == null);
+	}
+
+	private boolean playersLive(){
+		for (Player p:this.players){
+
+			//if some player is still alive, isDead == false 
+			if(!p.isDead())
+				return true;
+		}
+
+		//no one's live
+		return false;
 	}
 
 	private void movePlayer(int roll) {

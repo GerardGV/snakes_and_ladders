@@ -4,7 +4,7 @@ public class SnakeOrLadder extends Square {
 
     public SnakeOrLadder(int pos, Board b, int trans) {
         super(pos, b);
-        //assert trans > 0;
+
         transport = trans;
     }
 
