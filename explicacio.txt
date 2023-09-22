@@ -1,0 +1,13 @@
+1. PART:
+When we start to code we have difficulties in read and understand the structure of 
+the program, but once we have taken it our, we understand how to work and implement the
+changes in creating the new class that mix two.
+
+2.PART:
+This part was quite complex, in fact we had the challenge on chase/find those functions 
+and atributes which would had been modified in order to implement the new class 'death'.
+For example, if we wanted to implement it, one of the functions that was compulsory to change
+was the constructor in charge of the board creation that received one more vector which contained 
+the squares where we desire to mark as death. Moreover, was primordial to select wisely where 
+to implement new logical structures for the flux control game, where as well as all players 
+were dead the game should finish.
