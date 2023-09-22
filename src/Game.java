@@ -86,7 +86,17 @@ public final class Game {
 	private void movePlayer(int roll) {
 		Player currentPlayer = players.remove(); // the first element of the list
 		currentPlayer.moveForward(roll);
-		players.add(currentPlayer); // to the end of list, we're using the linked list as a queue
+
+		//if player isn't dead, it's added to the players list
+		if(!currentPlayer.isDead())
+		{
+			players.add(currentPlayer); // to the end of list, we're using the linked list as a queue
+
+		}else
+		{
+			System.out.println("This player is dead");
+		}
+
 		if (currentPlayer.wins()) {
 			winner = currentPlayer;
 		}
